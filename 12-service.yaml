@@ -11,5 +11,5 @@ spec:
   - name: nginx-svc-ports
     protocol: TCP
     port: 89 #service port
-    targetport: 80 #conainer port
+    targetPort: 80 #conainer port
     
