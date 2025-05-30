@@ -1,19 +1,18 @@
-kind: Pod
 apiVersion: v1
+kind: Pod
 metadata:
-  name: pod-config 
-  spec:
-    containers:
+  name: pod-config
+spec:  
     - name: nginx
       image: nginx
       env: 
         - name: course
           valueFrom:
-            ConfigMapKeyRef:
+            configMapKeyRef:
               name: nginx-config #name of the config map you are referring to
               key: course # env.name and config map key name need not to be same
         - name: duration
           valueFrom:
-            ConfigMapKeyRef:
+            configMapKeyRef:
               name: nginx-config
               key: duration
