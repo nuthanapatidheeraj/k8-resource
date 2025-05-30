@@ -7,7 +7,7 @@ metadata:
     module: backend
     environment: dev
 spec: 
-  container:
+  containers:
   - name: nginx
     image: nginx    
 
