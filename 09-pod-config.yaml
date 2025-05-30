@@ -10,10 +10,10 @@ metadata:
         - name: course
           valueFrom:
             ConfigMapKeyRef:
-              name: nginx-config #name of the config map you are referring
+              name: nginx-config #name of the config map you are referring to
               key: course # env.name and config map key name need not to be same
         - name: duration
           valueFrom:
-          ConfigMapKeyRef:
-            name: nginx-config
-            key: duration
+            ConfigMapKeyRef:
+              name: nginx-config
+              key: duration
