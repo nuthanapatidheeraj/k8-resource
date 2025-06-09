@@ -1,0 +1,47 @@
+apiVersion: v1 # syntax to request the volume
+kind: PersistentVolumeClaim
+metadata:
+  name: ebs-dynamic
+spec:
+  storageClassName: "expense-ebs" # Empty string must be explicitly set otherwise default StorageClass will be set
+  #volumeName: ebs-dynamic
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1 #Syntax to  pod
+kind: Pod
+metadata:
+  name: ebs-dynamic
+  labels:
+    purpose: ebs-dynamic
+spec:
+  nodeSelector:
+    topology.kubernetes.io/zone: us-east-1d
+  containers:
+  - name: nginx
+    image: nginx
+    volumeMounts: # docker run -v hostpath:contaierpath
+    - name: ebs-static
+      mountPath: /usr/share/nginx/html  #in this path we can access the EBS volumes
+  volumes:
+  - name: ebs-dynamic #this will come from persistent volume claim
+    persistentVolumeClaim:
+      claimName: ebs-dynamic
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx
+spec:
+  type: LoadBalancer
+  selector:
+    purpose: ebs-dynamic
+  ports:
+  - name: nginx-svc-port
+    protocol: TCP
+    port: 80 # service port
+    targetPort: 80 # container port
+    nodePort: 30007
